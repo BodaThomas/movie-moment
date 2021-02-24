@@ -26,6 +26,7 @@ class App extends React.Component {
 
     componentDidMount() {
         this.getMovies(1)
+        Modal.setAppElement('#main')
     }
 
     handleMovieClick(id) {
@@ -35,7 +36,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="App" id="main">
                 <div className="App-header">
                     <Modal
                         isOpen={this.state.modalIsOpen}
