@@ -39,6 +39,10 @@
   font-family: 'Red Hat Display', 'Raleway', sans-serif;
 }
 
+.modal-button {
+  font-family: 'Red Hat Display', 'Raleway', sans-serif;
+}
+
 .modal-button:hover {
   background-color: white;
   color: black;
