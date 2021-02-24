@@ -26,6 +26,20 @@
   font-size: medium;
 }
 
+.movies:hover {
+  cursor: pointer;
+  border: 1px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 10px;
+  background-color: rgb(245, 245, 245);
+}
+
 .movie-modal {
   font-family: 'Red Hat Display', 'Raleway', sans-serif;
+}
+
+.modal-button:hover {
+  background-color: white;
+  color: black;
 }

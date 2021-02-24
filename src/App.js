@@ -66,7 +66,7 @@ class App extends React.Component {
                         style={modalStyle}
                         onRequestClose={() => {this.setState({modalIsOpen: false})}}
                     >
-                        <button onClick={() => this.setState({modalIsOpen: false})}>Close</button>
+                        <button className="float-right border border-white p-1 rounded-lg modal-button" onClick={() => this.setState({modalIsOpen: false})}>Close</button>
                         <MovieModal movieData={this.state.modalData}/>
                     </Modal>
                     <InfiniteScroll
@@ -74,7 +74,7 @@ class App extends React.Component {
                         hasMore={this.state.page < this.state.maxPages ? true : false}
                     >
                         <div className="title">Last Movies</div>
-                        <div className="movies grid grid-cols-5 gap-4 auto-cols-max">
+                        <div className="grid grid-cols-5 gap-4 auto-cols-max">
                             {this.state.movies !== null ?
                                 this.state.movies.map((element, i) => (
                                     <div className="w-48" key={i} onClick={() => this.handleMovieClick(element)}>

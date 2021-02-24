@@ -8,7 +8,7 @@ class Movie extends React.Component {
 
     render() {
         return (
-            <div className="flex flex-col justify-center items-center">
+            <div className="movies flex flex-col justify-center items-center p-1">
                 {this.props.data.poster_path !== null ? <img src={'http://image.tmdb.org/t/p/w185' + this.props.data.poster_path} className="rounded-xl"/> : null}
                 {this.props.data.title !== null ? <p className="overflow-clip overflow-hidden">{this.props.data.title}</p> : null}
             </div>
