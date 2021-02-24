@@ -17,7 +17,7 @@ class Movie extends React.Component {
 }
 
 Movie.propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object.isRequired
 }
 
 export default Movie
