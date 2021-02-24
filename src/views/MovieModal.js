@@ -17,7 +17,6 @@ class MovieModal extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.movieData)
         this.setState({
             title: this.props.movieData.title,
             overview: this.props.movieData.overview,
