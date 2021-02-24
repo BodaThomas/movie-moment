@@ -10,28 +10,30 @@ class App extends React.Component {
         super(props)
 
         this.state = {
-            movies: null,
+            movies: [],
             page: null,
             maxPages: null,
             modalIsOpen: false,
-            movieIdModal: 54
+            modalData: null
         }
     }
 
     getMovies(page) {
         API.get(`/movie/now_playing?page=${page}`)
             .then(json => json.data)
-            .then(data => this.setState({movies: [...data.results]}))
+            .then(data => {
+                this.setState({movies: [...this.state.movies, ...data.results], page: page, maxPages: data.total_pages})
+                console.log(this.state.movies)
+            })
     }
 
     componentDidMount() {
-        this.getMovies(1)
         Modal.setAppElement('#main')
+        this.getMovies(1)
     }
 
-    handleMovieClick(id) {
-        console.log(id)
-        this.setState({movieIdModal: id, modalIsOpen: true})
+    handleMovieClick(data) {
+        this.setState({modalData: data, modalIsOpen: true})
     }
 
     render() {
@@ -63,12 +65,17 @@ class App extends React.Component {
                         onRequestClose={() => {this.setState({modalIsOpen: false})}}
                     >
                         <button onClick={() => this.setState({modalIsOpen: false})}>Close</button>
-                        <MovieModal movieId={this.state.movieIdModal}/>
+                        <MovieModal movieData={this.state.modalData}/>
                     </Modal>
                     <div className="title">Last Movies</div>
+                    <button onClick={() => this.getMovies(this.state.page+1)}>Next</button>
                     <div className="movies grid grid-cols-5 gap-4 auto-cols-max">
                         {this.state.movies !== null ?
-                            this.state.movies.map((element, i) => <div className="w-48" key={i} onClick={() => this.handleMovieClick(element.id)}><Movie data={element}/></div>)
+                            this.state.movies.map((element, i) => (
+                                <div className="w-48" key={i} onClick={() => this.handleMovieClick(element)}>
+                                    <Movie data={element}/>
+                                </div>
+                            ))
                             : null
                         }
                     </div>
