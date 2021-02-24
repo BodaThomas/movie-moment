@@ -8,31 +8,41 @@ class App extends React.Component {
         super(props)
 
         this.state = {
-            data: null
+            movies: null,
+            page: null,
+            maxPages: null
         }
     }
 
-    componentDidMount() {
+    getMovies(page) {
         API.get('/movie/now_playing', {
             params: {
-                page: 1
+                page: {page}
             }
         })
             .then(json => json.data)
-            .then(data => this.setState({data: data}))
+            .then(data => this.setState({movies: [...data.results]}))
+    }
+
+    componentDidMount() {
+        this.getMovies(1)
+    }
+
+    handleMovieClick(id) {
+        console.log(id)
     }
 
     render() {
-        if (this.state.data !== null)
-            console.log(this.state.data)
         return (
             <div className="App">
                 <header className="App-header">
                     <div className="title">Last Movies</div>
-                    {this.state.data !== null ?
-                        this.state.data.results.map((element, i) => <Movie key={i} data={element}/>)
-                        : null
-                    }
+                    <div className="movies grid grid-cols-5 gap-4">
+                        {this.state.movies !== null ?
+                            this.state.movies.map((element, i) => <div key={i} onClick={() => this.handleMovieClick(element.id)}><Movie data={element}/></div>)
+                            : null
+                        }
+                    </div>
                 </header>
             </div>
         )
