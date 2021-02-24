@@ -1,7 +1,9 @@
 import React from 'react'
+import Modal from 'react-modal'
 import './App.css'
 import API from './api'
-import Movie from './components/Movie'
+import { Movie } from './components'
+import { MovieModal } from './views'
 
 class App extends React.Component {
     constructor(props) {
@@ -10,7 +12,9 @@ class App extends React.Component {
         this.state = {
             movies: null,
             page: null,
-            maxPages: null
+            maxPages: null,
+            modalIsOpen: true,
+            movieIdModal: 54
         }
     }
 
@@ -30,12 +34,29 @@ class App extends React.Component {
 
     handleMovieClick(id) {
         console.log(id)
+        this.setState({})
     }
 
     render() {
         return (
             <div className="App">
-                <header className="App-header">
+                <div className="App-header">
+                    <Modal
+                        isOpen={this.state.modalIsOpen}
+                        className="h-full w-full bg-gray-800 border-b-2"
+                        style={{
+                            overlay: {
+                                position: 'fixed',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                borderRadius: 15,
+                                padding: 10
+                            }
+                        }}
+                    >
+                        <MovieModal movieId={this.state.movieIdModal}/>
+                    </Modal>
                     <div className="title">Last Movies</div>
                     <div className="movies grid grid-cols-5 gap-4">
                         {this.state.movies !== null ?
@@ -43,7 +64,7 @@ class App extends React.Component {
                             : null
                         }
                     </div>
-                </header>
+                </div>
             </div>
         )
     }
