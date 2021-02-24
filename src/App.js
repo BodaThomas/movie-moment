@@ -13,17 +13,13 @@ class App extends React.Component {
             movies: null,
             page: null,
             maxPages: null,
-            modalIsOpen: true,
+            modalIsOpen: false,
             movieIdModal: 54
         }
     }
 
     getMovies(page) {
-        API.get('/movie/now_playing', {
-            params: {
-                page: {page}
-            }
-        })
+        API.get(`/movie/now_playing?page=${page}`)
             .then(json => json.data)
             .then(data => this.setState({movies: [...data.results]}))
     }
@@ -34,7 +30,7 @@ class App extends React.Component {
 
     handleMovieClick(id) {
         console.log(id)
-        this.setState({})
+        this.setState({movieIdModal: id, modalIsOpen: true})
     }
 
     render() {
@@ -43,24 +39,35 @@ class App extends React.Component {
                 <div className="App-header">
                     <Modal
                         isOpen={this.state.modalIsOpen}
-                        className="h-full w-full bg-gray-800 border-b-2"
+                        className="bg-gray-800 border-b-2 text-white"
                         style={{
                             overlay: {
                                 position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                            },
+                            content: {
+                                position: 'absolute',
+                                borderRadius: 15,
+                                padding: '20px',
+                                outline: 'none',
+                                overflow: 'auto',
                                 top: '50%',
                                 left: '50%',
-                                transform: 'translate(-50%, -50%)',
-                                borderRadius: 15,
-                                padding: 10
+                                transform: 'translate(-50%, -50%)'
                             }
                         }}
+                        onRequestClose={() => {this.setState({modalIsOpen: false})}}
                     >
+                        <button onClick={() => this.setState({modalIsOpen: false})}>Close</button>
                         <MovieModal movieId={this.state.movieIdModal}/>
                     </Modal>
                     <div className="title">Last Movies</div>
-                    <div className="movies grid grid-cols-5 gap-4">
+                    <div className="movies grid grid-cols-5 gap-4 auto-cols-max">
                         {this.state.movies !== null ?
-                            this.state.movies.map((element, i) => <div key={i} onClick={() => this.handleMovieClick(element.id)}><Movie data={element}/></div>)
+                            this.state.movies.map((element, i) => <div className="w-48" key={i} onClick={() => this.handleMovieClick(element.id)}><Movie data={element}/></div>)
                             : null
                         }
                     </div>
