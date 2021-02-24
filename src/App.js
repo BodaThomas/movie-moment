@@ -20,7 +20,6 @@ class App extends React.Component {
     }
 
     getMovies(page) {
-        console.log(this.state.page)
         API.get(`/movie/now_playing?page=${page}`)
             .then(json => json.data)
             .then(data => {
